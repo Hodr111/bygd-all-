@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050505">
+<title>bygdëall 🇯🇵 — Unidos somos mais fortes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050505;
+    --surface:#0F0E0E;
+    --surface-2:#171514;
+    --line:#2A2422;
+    --text:#EDEAE3;
+    --muted:#9C9690;
+    --red:#B4232F;
+    --red-glow:#FF3B3B;
+    --gold:#D4AF37;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6;overflow-x:hidden;}
+  a{color:inherit;text-decoration:none;}
+  img{display:block;max-width:100%;}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 20px;}
+  h1,h2,h3{font-family:'Cinzel',serif;letter-spacing:.01em;}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--red-glow);}
+
+  /* grain overlay */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:998;pointer-events:none;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  }
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;
+    padding:16px 20px;background:linear-gradient(to bottom, rgba(5,5,5,.92), rgba(5,5,5,.4) 70%, transparent);}
+  .brand{display:flex;align-items:center;gap:10px;font-family:'Sora',sans-serif;font-weight:700;font-size:15.5px;letter-spacing:-.01em;}
+  .brand img{width:32px;height:32px;border-radius:6px;object-fit:cover;border:1px solid var(--red);}
+  .hanko{width:26px;height:26px;flex:0 0 26px;border-radius:6px;background:linear-gradient(160deg,var(--red) 0%,#7a1620 100%);
+    display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-weight:800;
+    font-size:12px;color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.15), 0 0 14px rgba(180,35,47,.5);
+    transform:rotate(-3deg);}
+  .burger{width:26px;height:20px;position:relative;cursor:pointer;background:none;border:none;}
+  .burger span{position:absolute;left:0;right:0;height:2px;background:var(--text);transition:.3s;}
+  .burger span:nth-child(1){top:0;} .burger span:nth-child(2){top:9px;} .burger span:nth-child(3){top:18px;}
+  .menu-overlay{
+    position:fixed;inset:0;background:rgba(5,5,5,.97);z-index:99;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:28px;transform:translateY(-100%);transition:transform .35s ease;
+  }
+  .menu-overlay.open{transform:translateY(0);}
+  .menu-overlay a{font-family:'Cinzel',serif;font-size:22px;letter-spacing:.05em;}
+
+  /* HERO */
+  .hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:120px 20px 60px;overflow:hidden;}
+  .hero-media{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover;filter:brightness(.55) saturate(1.1);}
+  .hero-fallback{position:absolute;inset:0;z-index:-2;
+    background:
+      radial-gradient(circle at 50% 20%, rgba(180,35,47,.25), transparent 55%),
+      radial-gradient(circle at 20% 80%, rgba(212,175,55,.06), transparent 50%),
+      #050505;}
+  .hero::after{content:"";position:absolute;inset:0;z-index:-1;
+    background:linear-gradient(to bottom, rgba(5,5,5,.35) 0%, rgba(5,5,5,.55) 60%, rgba(5,5,5,.95) 100%);}
+  .sigilo{width:110px;height:110px;margin-bottom:20px;opacity:.95;filter:drop-shadow(0 0 18px rgba(180,35,47,.55));}
+  .hero-logo{width:76px;height:76px;border-radius:10px;object-fit:cover;border:1px solid var(--red);margin-bottom:18px;display:none;}
+  .hero h1{font-family:'Sora',sans-serif;font-size:clamp(36px,9vw,72px);font-weight:800;
+    letter-spacing:-.01em;text-shadow:0 0 30px rgba(180,35,47,.5);}
+  .hero h1 .flag{font-size:.55em;vertical-align:middle;margin-left:.15em;}
+  .hero .motto{margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--muted);}
+  .hero-actions{display:flex;flex-direction:column;gap:12px;margin-top:34px;width:100%;max-width:340px;}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:15px 26px;
+    font-family:'Inter',sans-serif;font-weight:600;font-size:14.5px;border-radius:8px;transition:.25s;}
+  .btn-solid{background:var(--text);color:#0B0B0C;}
+  .btn-solid:hover{background:var(--red-glow);color:#fff;}
+  .btn-outline{border:1px solid var(--line);color:var(--text);}
+  .btn-outline:hover{border-color:var(--red-glow);color:var(--red-glow);}
+
+  /* SECTION shared */
+  section{padding:70px 0;position:relative;}
+  .section-head{margin-bottom:30px;text-align:center;}
+  .section-head h2{font-size:clamp(24px,5vw,34px);margin-top:8px;}
+  .section-head p{color:var(--muted);font-size:14.5px;margin-top:8px;}
+
+  /* BADGE */
+  .badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:999px;
+    font-size:12px;font-weight:600;border:1px solid var(--line);color:var(--muted);}
+  .badge.vip{border-color:var(--gold);color:var(--gold);}
+  .badge.grupo{border-color:#3E7BC4;color:#8FB6E8;}
+  .badge.canal{border-color:#3E7BC4;color:#8FB6E8;}
+
+  /* CARDS ROW */
+  .row-scroll{display:flex;gap:14px;overflow-x:auto;padding:6px 20px 16px;scroll-snap-type:x mandatory;}
+  .row-scroll::-webkit-scrollbar{height:5px;}
+  .row-scroll::-webkit-scrollbar-thumb{background:var(--line);border-radius:10px;}
+  .card{scroll-snap-align:start;flex:0 0 250px;background:var(--surface);border:1px solid var(--line);
+    border-radius:14px;overflow:hidden;display:flex;flex-direction:column;
+    transition:transform .35s cubic-bezier(.2,.8,.2,1), border-color .35s, box-shadow .35s;}
+  .card:hover{transform:translateY(-6px);border-color:rgba(255,59,59,.4);
+    box-shadow:0 18px 40px -12px rgba(180,35,47,.35);}
+  .card-img{width:100%;height:150px;object-fit:cover;background:var(--surface-2);transition:transform .5s;}
+  .card:hover .card-img{transform:scale(1.05);}
+  .card-img.empty{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px;}
+  .card-body{padding:14px 16px;display:flex;flex-direction:column;gap:6px;flex:1;}
+  .card-body .cbadge{margin-bottom:2px;}
+  .card-body h3{font-size:17px;font-family:'Inter',sans-serif;font-weight:700;}
+  .card-body .dono{color:var(--muted);font-size:12.5px;}
+  .card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:8px;}
+  .members{display:flex;align-items:center;gap:5px;color:var(--muted);font-size:12.5px;}
+  .enter-btn{border:1px solid var(--line);border-radius:6px;padding:7px 12px;font-size:12.5px;font-weight:600;
+    display:flex;align-items:center;gap:5px;transition:.2s;}
+  .enter-btn:hover{border-color:var(--red-glow);color:var(--red-glow);}
+  .empty-msg{text-align:center;color:var(--muted);font-size:13.5px;padding:20px;}
+
+  /* STATS */
+  .stats{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .stat{position:relative;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;
+    padding:28px 14px 24px;text-align:center;overflow:hidden;transition:border-color .3s, transform .3s;}
+  .stat::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;
+    background:linear-gradient(90deg, transparent, var(--red-glow), var(--gold), transparent);
+    opacity:.7;}
+  .stat:hover{border-color:rgba(255,59,59,.35);transform:translateY(-3px);}
+  .stat .num{font-family:'Sora',sans-serif;font-size:32px;font-weight:800;color:var(--red-glow);
+    letter-spacing:-.01em;}
+  .stat .lbl{color:var(--muted);font-size:12px;margin-top:8px;letter-spacing:.02em;}
+
+  /* AVISOS */
+  .aviso{border:1px solid var(--line);border-left:3px solid var(--red);border-radius:8px;
+    padding:16px 18px;margin-bottom:12px;background:var(--surface);}
+  .aviso.info{border-left-color:var(--gold);}
+  .aviso-head{display:flex;align-items:center;gap:8px;font-weight:700;margin-bottom:6px;font-size:15px;}
+  .aviso p{color:var(--muted);font-size:13.5px;}
+
+  /* SOBRE */
+  .sobre p{color:var(--muted);font-size:15px;text-align:center;max-width:620px;margin:0 auto;}
+
+  /* GALERIA */
+  .galeria-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+  .galeria-grid img{width:100%;height:110px;object-fit:cover;border-radius:6px;border:1px solid var(--line);}
+
+  /* CONTATO */
+  .contato{text-align:center;}
+  .socials{display:flex;justify-content:center;gap:16px;margin-top:18px;}
+  .socials a{width:42px;height:42px;border:1px solid var(--line);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;transition:.2s;}
+  .socials a:hover{border-color:var(--red-glow);}
+
+  footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:var(--muted);font-size:12.5px;}
+  footer .brand{justify-content:center;margin-bottom:10px;font-size:15px;}
+
+  @media(min-width:640px){
+    .stats-grid{grid-template-columns:repeat(4,1fr);}
+    .galeria-grid{grid-template-columns:repeat(4,1fr);}
+  }
+  :focus-visible{outline:1px solid var(--red-glow);outline-offset:2px;}
+
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+    .card, .stat{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">
+    <img id="navLogo" src="" alt="" style="display:none">
+    <span class="hanko" id="navHanko">B</span>
+    <span>bygdëall 🇯🇵</span>
+  </div>
+  <button class="burger" id="burgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="menu-overlay" id="menuOverlay">
+  <a href="#grupos">Grupos</a>
+  <a href="#canais">Canais</a>
+  <a href="#vip">VIP</a>
+  <a href="#avisos">Avisos</a>
+  <a href="#sobre">Sobre</a>
+  <a href="#galeria">Galeria</a>
+  <a href="#contato">Contato</a>
+</div>
+
+<header class="hero" id="hero">
+  <video class="hero-media" id="heroVideo" autoplay muted loop playsinline style="display:none"></video>
+  <img class="hero-media" id="heroImage" style="display:none">
+  <div class="hero-fallback" id="heroFallback"></div>
+
+  <svg class="sigilo" viewBox="0 0 200 200" fill="none">
+    <circle cx="100" cy="100" r="90" stroke="#B4232F" stroke-width="1.2"/>
+    <circle cx="100" cy="100" r="74" stroke="#D4AF37" stroke-width="0.6" stroke-dasharray="1 6"/>
+    <path d="M100 24 L172 130 H28 Z" stroke="#EDEAE3" stroke-width="1"/>
+    <circle cx="100" cy="105" r="16" stroke="#EDEAE3" stroke-width="1.2"/>
+    <circle cx="100" cy="105" r="4" fill="#FF3B3B"/>
+  </svg>
+  <img class="hero-logo" id="heroLogo" alt="">
+  <h1 id="heroTitle">bygdëall <span class="flag">🇯🇵</span></h1>
+  <p class="motto" id="heroMotto">Unidos somos mais fortes</p>
+
+  <div class="hero-actions">
+    <a href="#grupos" class="btn btn-solid">Entrar na Comunidade</a>
+    <a href="#grupos" class="btn btn-outline">Ver Grupos →</a>
+  </div>
+</header>
+
+<section id="stats" class="stats">
+  <div class="wrap">
+    <div class="section-head reveal"><span class="eyebrow">Impacto</span><h2>Nossa Força em Números</h2><p>A dimensão da rede bygdëall.</p></div>
+    <div class="stats-grid">
+      <div class="stat"><div class="num" id="statGrupos">0</div><div class="lbl">Total de Grupos</div></div>
+      <div class="stat"><div class="num" id="statAfiliados">0</div><div class="lbl">Total de Afiliados</div></div>
+      <div class="stat"><div class="num" id="statMembros">0</div><div class="lbl">Total de Membros</div></div>
+      <div class="stat"><div class="num" id="statComunidades">0</div><div class="lbl">Comunidades</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="vip">
+  <div class="wrap">
+    <div class="section-head reveal"><span class="badge vip">👑 Exclusivo</span><h2 style="margin-top:12px;">💎 VIP</h2><p>Grupos VIP da aliança, com acesso prioritário.</p></div>
+  </div>
+  <div class="row-scroll" id="vipRow"></div>
+</section>
+
+<section id="grupos">
+  <div class="wrap">
+    <div class="section-head reveal"><span class="badge">👥 Comunidades</span><h2 style="margin-top:12px;">Grupos</h2><p>Explore os grupos que formam nossa rede.</p></div>
+  </div>
+  <div class="row-scroll" id="gruposRow"></div>
+</section>
+
+<section id="canais">
+  <div class="wrap">
+    <div class="section-head reveal"><span class="badge canal">📡 Oficiais</span><h2 style="margin-top:12px;">📣 Canais da bygdëall</h2><p>Canais oficiais para novidades e atualizações.</p></div>
+  </div>
+  <div class="row-scroll" id="canaisRow"></div>
+</section>
+
+<section id="avisos">
+  <div class="wrap">
+    <div class="section-head reveal"><span class="eyebrow">Comunicados</span><h2>Avisos Importantes</h2><p>Mantenha-se informado sobre as novidades da bygdëall.</p></div>
+    <div id="avisosList"></div>
+  </div>
+</section>
+
+<section id="sobre" class="sobre">
+  <div class="wrap">
+    <div class="section-head reveal"><span class="eyebrow">Quem Somos</span><h2>Sobre a bygdëall</h2></div>
+    <p id="sobreTexto">A bygdëall é uma rede de comunidades unidas pela força e colaboração.</p>
+  </div>
+</section>
+
+<section id="galeria">
+  <div class="wrap">
+    <div class="section-head reveal"><span class="eyebrow">Visual</span><h2>Galeria</h2><p>Momentos e visuais da bygdëall.</p></div>
+    <div class="galeria-grid" id="galeriaGrid"></div>
+  </div>
+</section>
+
+<section id="contato" class="contato">
+  <div class="wrap">
+    <div class="section-head reveal"><span class="eyebrow">Contato</span><h2>Entre em contato com a bygdëall</h2></div>
+    <p id="contatoEmail" style="color:var(--muted)"></p>
+    <div class="socials" id="contatoSocials"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="brand" style="display:flex;justify-content:center;">bygdëall 🇯🇵</div>
+  <div>Unidos somos mais fortes.</div>
+  <div style="margin-top:14px;">© <span id="year"></span> bygdëall — <a href="admin.html" style="text-decoration:underline;">Painel ADM</a></div>
+</footer>
+
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+const burgerBtn = document.getElementById('burgerBtn');
+const menuOverlay = document.getElementById('menuOverlay');
+burgerBtn.addEventListener('click', () => menuOverlay.classList.toggle('open'));
+menuOverlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menuOverlay.classList.remove('open')));
+
+function iconMembers(){
+  return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>';
+}
+function iconEnter(){
+  return '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>';
+}
+
+function renderCard(item){
+  const img = item.imagemUrl
+    ? `<img class="card-img" src="${item.imagemUrl}" alt="${item.nome||''}">`
+    : `<div class="card-img empty">Sem imagem</div>`;
+  const badgeLabel = item.tipo === 'vip' ? '💎 VIP' : (item.tipo === 'canal' ? '📡 Canal' : '👥 Grupo');
+  const badgeClass = item.tipo === 'vip' ? 'vip' : (item.tipo === 'canal' ? 'canal' : 'grupo');
+  return `
+    <div class="card">
+      ${img}
+      <div class="card-body">
+        <span class="badge ${badgeClass} cbadge">${badgeLabel}</span>
+        <h3>${item.nome || 'Sem nome'}</h3>
+        ${item.dono ? `<div class="dono">Dono: ${item.dono}</div>` : ''}
+        <div class="card-footer">
+          <span class="members">${iconMembers()} ${item.membros ?? 0}</span>
+          <a class="enter-btn" href="${item.link || '#'}" target="_blank" rel="noopener">Entrar ${iconEnter()}</a>
+        </div>
+      </div>
+    </div>`;
+}
+
+function watchItems(tipo, containerId, emptyText){
+  const el = document.getElementById(containerId);
+  db.collection('items').where('tipo', '==', tipo).orderBy('ordem', 'asc')
+    .onSnapshot(snap => {
+      if (snap.empty){ el.innerHTML = `<div class="empty-msg">${emptyText}</div>`; return; }
+      el.innerHTML = snap.docs.map(d => renderCard(d.data())).join('');
+      updateStats();
+    }, err => { el.innerHTML = `<div class="empty-msg">Nenhum item nesta categoria ainda.</div>`; });
+}
+
+let allItemsCache = [];
+function updateStats(){
+  db.collection('items').get().then(snap => {
+    allItemsCache = snap.docs.map(d => d.data());
+    const grupos = allItemsCache.filter(i => i.tipo === 'grupo').length;
+    const membros = allItemsCache.reduce((sum,i) => sum + (Number(i.membros) || 0), 0);
+    document.getElementById('statGrupos').textContent = grupos;
+    document.getElementById('statMembros').textContent = membros.toLocaleString('pt-BR');
+    document.getElementById('statComunidades').textContent = allItemsCache.length;
+  });
+}
+
+watchItems('grupo', 'gruposRow', 'Nenhum item nesta categoria ainda.');
+watchItems('canal', 'canaisRow', 'Nenhum item nesta categoria ainda.');
+watchItems('vip', 'vipRow', 'Nenhum item nesta categoria ainda.');
+
+// HERO / CONFIG DO SITE
+db.collection('config').doc('site').onSnapshot(doc => {
+  const d = doc.data() || {};
+  if (d.heroTitle) document.getElementById('heroTitle').textContent = d.heroTitle;
+  if (d.heroMotto) document.getElementById('heroMotto').textContent = d.heroMotto;
+  if (d.heroLogoUrl){
+    document.getElementById('heroLogo').src = d.heroLogoUrl;
+    document.getElementById('heroLogo').style.display = 'block';
+    document.getElementById('navLogo').src = d.heroLogoUrl;
+    document.getElementById('navLogo').style.display = 'block';
+    document.getElementById('navHanko').style.display = 'none';
+  }
+  if (d.heroMediaUrl){
+    document.getElementById('heroFallback').style.display = 'none';
+    if (d.heroMediaType === 'video'){
+      const v = document.getElementById('heroVideo');
+      v.src = d.heroMediaUrl; v.style.display = 'block';
+    } else {
+      const im = document.getElementById('heroImage');
+      im.src = d.heroMediaUrl; im.style.display = 'block';
+    }
+  }
+  document.getElementById('statAfiliados').textContent = d.totalAfiliados ?? 0;
+});
+
+// SOBRE
+db.collection('config').doc('sobre').onSnapshot(doc => {
+  const d = doc.data();
+  if (d && d.texto) document.getElementById('sobreTexto').textContent = d.texto;
+});
+
+// CONTATO
+db.collection('config').doc('contato').onSnapshot(doc => {
+  const d = doc.data() || {};
+  document.getElementById('contatoEmail').textContent = d.email || '';
+  const icons = {
+    instagram: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>',
+    facebook: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>',
+    discord: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/><path d="M7.5 6.5C9 5.5 15 5.5 16.5 6.5M6 17c-1.5-4 0-8 1-9M18 17c1.5-4 0-8-1-9"/></svg>'
+  };
+  let html = '';
+  ['instagram','facebook','discord'].forEach(k => {
+    if (d[k]) html += `<a href="${d[k]}" target="_blank" rel="noopener">${icons[k]}</a>`;
+  });
+  document.getElementById('contatoSocials').innerHTML = html;
+});
+
+// AVISOS
+db.collection('avisos').orderBy('criadoEm', 'desc').onSnapshot(snap => {
+  const el = document.getElementById('avisosList');
+  if (snap.empty){ el.innerHTML = '<div class="empty-msg">Nenhum aviso publicado.</div>'; return; }
+  el.innerHTML = snap.docs.map(d => {
+    const a = d.data();
+    const isAlerta = a.tipo === 'alerta';
+    const icon = isAlerta
+      ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B4232F" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'
+      : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>';
+    return `<div class="aviso ${isAlerta ? '' : 'info'}">
+      <div class="aviso-head">${icon} ${a.titulo || ''}</div>
+      <p>${a.texto || ''}</p>
+    </div>`;
+  }).join('');
+});
+
+// GALERIA
+db.collection('galeria').orderBy('criadoEm', 'desc').onSnapshot(snap => {
+  const el = document.getElementById('galeriaGrid');
+  if (snap.empty){ el.innerHTML = '<div class="empty-msg">Nenhuma imagem na galeria.</div>'; return; }
+  el.innerHTML = snap.docs.map(d => `<img src="${d.data().imagemUrl}" alt="">`).join('');
+});
+</script>
+</body>
+</html>
