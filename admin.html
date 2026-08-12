@@ -2,52 +2,27 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
 <title>Painel ADM — bygdëall</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
 <style>
-:root{
-  --bg:#050505;
-  --surface:#0F0E0E;
-  --surface-2:#171514;
-  --line:#2A2422;
-  --text:#EDEAE3;
-  --muted:#9C9690;
-  --red:#B4232F;
-  --red-glow:#FF3B3B;
-  --green:#3CB371;
-}
-
 *{
+  box-sizing:border-box;
   margin:0;
   padding:0;
-  box-sizing:border-box;
 }
 
 body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:'Inter',sans-serif;
   min-height:100vh;
-}
-
-h1,h2{
-  font-family:'Sora',sans-serif;
-}
-
-button,
-input,
-textarea,
-select{
-  font-family:'Inter',sans-serif;
+  background:#050505;
+  color:#eee;
+  font-family:Arial,sans-serif;
 }
 
 /* LOGIN */
 
-#loginScreen{
+#login{
   min-height:100vh;
   display:flex;
   align-items:center;
@@ -56,280 +31,157 @@ select{
 }
 
 .login-box{
-  background:var(--surface);
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:34px 26px;
   width:100%;
-  max-width:340px;
+  max-width:350px;
+  background:#111;
+  border:1px solid #292929;
+  border-radius:15px;
+  padding:30px;
   text-align:center;
-  box-shadow:0 20px 60px rgba(0,0,0,.35);
 }
 
 .login-box h1{
-  font-size:22px;
-  margin-bottom:6px;
+  margin-bottom:8px;
 }
 
 .login-box p{
-  color:var(--muted);
+  color:#999;
   font-size:13px;
   margin-bottom:22px;
 }
 
-input,
-textarea,
-select{
+input{
   width:100%;
-  background:var(--surface-2);
-  border:1px solid var(--line);
-  color:var(--text);
-  padding:12px 14px;
-  border-radius:8px;
-  font-size:14.5px;
+  padding:13px;
   margin-bottom:12px;
+  border-radius:8px;
+  border:1px solid #333;
+  background:#181818;
+  color:#fff;
   outline:none;
 }
 
-input:focus,
-textarea:focus,
-select:focus{
-  border-color:var(--red-glow);
+button{
+  width:100%;
+  padding:13px;
+  border:0;
+  border-radius:8px;
+  background:#b4232f;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
 }
 
-input::placeholder,
-textarea::placeholder{
-  color:#65605B;
+button:hover{
+  background:#e02e3d;
+}
+
+.erro{
+  color:#ff4545;
+  font-size:13px;
+  margin-top:12px;
+}
+
+/* PAINEL */
+
+#painel{
+  display:none;
+}
+
+header{
+  position:sticky;
+  top:0;
+  z-index:10;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px 20px;
+  background:#101010;
+  border-bottom:1px solid #292929;
+}
+
+header button{
+  width:auto;
+  padding:9px 14px;
+  background:transparent;
+  border:1px solid #333;
+}
+
+.container{
+  width:100%;
+  max-width:700px;
+  margin:auto;
+  padding:20px;
+}
+
+.card{
+  background:#101010;
+  border:1px solid #292929;
+  border-radius:14px;
+  padding:20px;
+  margin-bottom:18px;
+}
+
+.card h2{
+  margin-bottom:15px;
+  font-size:18px;
 }
 
 label{
   display:block;
-  font-size:12.5px;
-  color:var(--muted);
-  margin-bottom:6px;
-  text-align:left;
-}
-
-button{
-  cursor:pointer;
-  border:none;
-  border-radius:8px;
-  padding:13px 18px;
-  font-weight:600;
-  font-size:14px;
-  background:var(--red);
-  color:#fff;
-  transition:.2s;
-  width:100%;
-}
-
-button:hover{
-  background:var(--red-glow);
-}
-
-button.secondary{
-  background:transparent;
-  border:1px solid var(--line);
-  color:var(--text);
-}
-
-button.secondary:hover{
-  border-color:var(--red-glow);
-  color:var(--red-glow);
-}
-
-.error-msg{
-  color:var(--red-glow);
+  color:#aaa;
   font-size:13px;
+  margin-bottom:7px;
+}
+
+.video-box{
   margin-top:10px;
-  min-height:16px;
 }
 
-/* DASHBOARD */
-
-#dashboard{
+video{
+  width:100%;
+  max-height:300px;
+  border-radius:10px;
+  background:#000;
   display:none;
+  object-fit:cover;
 }
 
-header.top{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:16px 20px;
-  border-bottom:1px solid var(--line);
-  background:var(--surface);
-  position:sticky;
-  top:0;
-  z-index:10;
-}
-
-header.top .brand{
-  font-family:'Sora',sans-serif;
-  font-size:16px;
-  font-weight:700;
-}
-
-header.top button{
-  width:auto;
-  padding:8px 14px;
-  font-size:12.5px;
-}
-
-.tabs{
-  display:flex;
-  overflow-x:auto;
-  gap:6px;
-  padding:14px 20px 0;
-}
-
-.tab-btn{
-  flex:0 0 auto;
-  padding:9px 15px;
-  border-radius:999px;
-  border:1px solid var(--line);
-  background:transparent;
-  color:var(--muted);
-  font-size:13px;
-  width:auto;
-  font-weight:500;
-}
-
-.tab-btn.active{
-  border-color:var(--red-glow);
-  color:var(--red-glow);
-  background:rgba(180,35,47,.08);
-}
-
-.wrap{
-  max-width:640px;
-  margin:0 auto;
-  padding:20px;
-}
-
-.panel{
-  display:none;
-}
-
-.panel.active{
+.file-button{
   display:block;
-}
-
-.card{
-  background:var(--surface);
-  border:1px solid var(--line);
-  border-radius:12px;
-  padding:18px;
-  margin-bottom:16px;
-}
-
-.card h2{
-  font-size:17px;
-  margin-bottom:14px;
+  width:100%;
+  padding:13px;
+  border-radius:8px;
+  background:#191919;
+  border:1px solid #333;
+  text-align:center;
+  cursor:pointer;
+  margin-bottom:12px;
 }
 
 .status{
-  font-size:12.5px;
-  color:var(--green);
-  min-height:16px;
-  margin-top:8px;
+  color:#3cb371;
+  font-size:13px;
+  margin-top:10px;
 }
 
-.status.err{
-  color:var(--red-glow);
+.info{
+  color:#999;
+  font-size:13px;
+  line-height:1.5;
 }
 
-.list-item{
-  display:flex;
-  gap:12px;
-  align-items:center;
-  padding:12px 0;
-  border-bottom:1px solid var(--line);
-}
-
-.list-item:last-child{
-  border-bottom:none;
-}
-
-.list-item img{
-  width:52px;
-  height:52px;
-  object-fit:cover;
-  border-radius:8px;
-  background:var(--surface-2);
-  flex:0 0 52px;
-}
-
-.list-item .info{
-  flex:1;
-  min-width:0;
-}
-
-.list-item .info .n{
-  font-weight:600;
-  font-size:14px;
-}
-
-.list-item .info .s{
-  color:var(--muted);
-  font-size:12px;
-}
-
-.btn-icon{
-  width:34px;
-  height:34px;
-  padding:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:transparent;
-  border:1px solid var(--line);
-  border-radius:8px;
-}
-
-.btn-icon:hover{
-  border-color:var(--red-glow);
-}
-
-.notice{
-  padding:14px;
-  border:1px solid var(--line);
-  border-radius:9px;
-  margin-bottom:10px;
-  background:var(--surface-2);
-}
-
-.notice strong{
-  display:block;
-  margin-bottom:5px;
-}
-
-.notice small{
-  color:var(--muted);
-}
-
-.success{
-  border-color:rgba(60,179,113,.4);
-  color:var(--green);
-}
-
-@media(max-width:500px){
-  .tabs{
-    padding-left:12px;
-    padding-right:12px;
-  }
-
-  .wrap{
-    padding:14px;
-  }
+.logout{
+  color:#fff;
 }
 </style>
 </head>
 
 <body>
 
-<!-- ================= LOGIN ================= -->
+<!-- LOGIN -->
 
-<div id="loginScreen">
+<section id="login">
 
   <div class="login-box">
 
@@ -338,490 +190,188 @@ header.top button{
     <p>Painel ADM — acesso restrito</p>
 
     <input
+      id="email"
       type="email"
-      id="loginEmail"
       placeholder="E-mail"
-      autocomplete="username"
     >
 
     <input
+      id="senha"
       type="password"
-      id="loginPass"
       placeholder="Senha"
-      autocomplete="current-password"
     >
 
-    <button id="loginBtn">
+    <button onclick="entrar()">
       Entrar
     </button>
 
-    <div class="error-msg" id="loginError"></div>
+    <div id="erro" class="erro"></div>
 
   </div>
 
-</div>
+</section>
 
 
-<!-- ================= PAINEL ================= -->
+<!-- PAINEL -->
 
-<div id="dashboard">
+<section id="painel">
 
-  <header class="top">
+  <header>
 
-    <div class="brand">
-      Painel ADM
-    </div>
+    <strong>Painel ADM</strong>
 
-    <button
-      id="logoutBtn"
-      class="secondary"
-    >
+    <button onclick="sair()">
       Sair
     </button>
 
   </header>
 
 
-  <!-- ABAS -->
+  <main class="container">
 
-  <div class="tabs">
+    <!-- VÍDEO -->
 
-    <button class="tab-btn active" data-tab="hero">
-      Hero
-    </button>
+    <div class="card">
 
-    <button class="tab-btn" data-tab="itens">
-      Grupos/Canais
-    </button>
+      <h2>🎥 Vídeo de fundo</h2>
 
-    <button class="tab-btn" data-tab="avisos">
-      Avisos
-    </button>
+      <p class="info">
+        Escolha um vídeo diretamente da galeria
+        do celular ou computador.
+      </p>
 
-    <button class="tab-btn" data-tab="sobre">
-      Sobre
-    </button>
+      <br>
 
-    <button class="tab-btn" data-tab="galeria">
-      Galeria
-    </button>
+      <label>
+        Vídeo do fundo
+      </label>
 
-    <button class="tab-btn" data-tab="contato">
-      Contato
-    </button>
+      <label
+        class="file-button"
+        for="videoInput"
+      >
+        📁 Escolher vídeo da galeria
+      </label>
 
-  </div>
+      <input
+        id="videoInput"
+        type="file"
+        accept="video/*"
+        style="display:none"
+      >
 
+      <div class="video-box">
 
-  <div class="wrap">
-
-
-    <!-- ================= HERO ================= -->
-
-    <div class="panel active" id="panel-hero">
-
-      <div class="card">
-
-        <h2>Topo do site</h2>
-
-        <label>
-          Título
-        </label>
-
-        <input
-          type="text"
-          id="heroTitle"
-          placeholder="bygdëall 🇯🇵"
-        >
-
-        <label>
-          Frase de efeito
-        </label>
-
-        <input
-          type="text"
-          id="heroMotto"
-          placeholder="Unidos somos mais fortes"
-        >
-
-        <label>
-          Total de afiliados
-        </label>
-
-        <input
-          type="number"
-          id="totalAfiliados"
-          placeholder="0"
-        >
-
-        <button onclick="mostrarSalvo('statusHero')">
-          Salvar topo
-        </button>
-
-        <div
-          class="status"
-          id="statusHero"
-        ></div>
+        <video
+          id="videoPreview"
+          controls
+          muted
+          playsinline
+        ></video>
 
       </div>
+
+      <div
+        id="videoStatus"
+        class="status"
+      ></div>
 
     </div>
 
 
-    <!-- ================= ITENS ================= -->
+    <!-- TÍTULO -->
 
-    <div class="panel" id="panel-itens">
+    <div class="card">
 
-      <div class="card">
+      <h2>📝 Informações do site</h2>
 
-        <h2>
-          Adicionar grupo / canal / VIP
-        </h2>
+      <label>
+        Título
+      </label>
 
-        <label>
-          Tipo
-        </label>
+      <input
+        id="titulo"
+        type="text"
+        placeholder="bygdëall 🇯🇵"
+      >
 
-        <select id="itemTipo">
+      <label>
+        Frase
+      </label>
 
-          <option value="grupo">
-            Grupo
-          </option>
+      <input
+        id="frase"
+        type="text"
+        placeholder="Unidos somos mais fortes"
+      >
 
-          <option value="canal">
-            Canal
-          </option>
+      <button onclick="salvarInfo()">
+        Salvar informações
+      </button>
 
-          <option value="vip">
-            VIP
-          </option>
-
-        </select>
-
-        <label>
-          Nome
-        </label>
-
-        <input
-          type="text"
-          id="itemNome"
-          placeholder="Ex: Chat Ünikz"
-        >
-
-        <label>
-          Dono
-        </label>
-
-        <input
-          type="text"
-          id="itemDono"
-          placeholder="Ex: Bruxo"
-        >
-
-        <label>
-          Nº de membros
-        </label>
-
-        <input
-          type="number"
-          id="itemMembros"
-          placeholder="0"
-        >
-
-        <label>
-          Link
-        </label>
-
-        <input
-          type="text"
-          id="itemLink"
-          placeholder="https://..."
-        >
-
-        <button onclick="adicionarItem()">
-          Adicionar
-        </button>
-
-        <div
-          class="status"
-          id="statusItem"
-        ></div>
-
-      </div>
-
-
-      <div class="card">
-
-        <h2>
-          Itens cadastrados
-        </h2>
-
-        <div id="itemsList">
-
-          <p style="color:var(--muted);font-size:13px;">
-            Nenhum item cadastrado.
-          </p>
-
-        </div>
-
-      </div>
+      <div
+        id="infoStatus"
+        class="status"
+      ></div>
 
     </div>
 
 
-    <!-- ================= AVISOS ================= -->
+    <!-- STATUS -->
 
-    <div class="panel" id="panel-avisos">
+    <div class="card">
 
-      <div class="card">
+      <h2>⚙️ Status</h2>
 
-        <h2>
-          Novo aviso
-        </h2>
-
-        <label>
-          Tipo
-        </label>
-
-        <select id="avisoTipo">
-
-          <option value="alerta">
-            Alerta
-          </option>
-
-          <option value="info">
-            Info
-          </option>
-
-        </select>
-
-        <label>
-          Título
-        </label>
-
-        <input
-          type="text"
-          id="avisoTitulo"
-          placeholder="Ex: Manutenção Programada"
-        >
-
-        <label>
-          Texto
-        </label>
-
-        <textarea
-          id="avisoTexto"
-          rows="4"
-          placeholder="Detalhes do aviso..."
-        ></textarea>
-
-        <button onclick="adicionarAviso()">
-          Publicar aviso
-        </button>
-
-        <div
-          class="status"
-          id="statusAviso"
-        ></div>
-
-      </div>
-
-
-      <div class="card">
-
-        <h2>
-          Avisos publicados
-        </h2>
-
-        <div id="avisosList"></div>
-
-      </div>
-
-    </div>
-
-
-    <!-- ================= SOBRE ================= -->
-
-    <div class="panel" id="panel-sobre">
-
-      <div class="card">
-
-        <h2>
-          Texto "Sobre a Aliança"
-        </h2>
-
-        <textarea
-          id="sobreTexto"
-          rows="7"
-          placeholder="A bygdëall 🇯🇵 é..."
-        ></textarea>
-
-        <button onclick="mostrarSalvo('statusSobre')">
-          Salvar
-        </button>
-
-        <div
-          class="status"
-          id="statusSobre"
-        ></div>
-
-      </div>
-
-    </div>
-
-
-    <!-- ================= GALERIA ================= -->
-
-    <div class="panel" id="panel-galeria">
-
-      <div class="card">
-
-        <h2>
-          Galeria
-        </h2>
-
-        <p style="color:var(--muted);font-size:13px;line-height:1.6;">
-          A galeria será conectada ao armazenamento na próxima etapa.
-        </p>
-
+      <p class="info">
+        Painel ADM funcionando localmente.
+        <br><br>
+        Login: protegido por sessão do navegador.
         <br>
-
-        <button onclick="mostrarSalvo('statusGaleria')">
-          Testar galeria
-        </button>
-
-        <div
-          class="status"
-          id="statusGaleria"
-        ></div>
-
-      </div>
+        Vídeo: selecionado diretamente da galeria.
+      </p>
 
     </div>
 
+  </main>
 
-    <!-- ================= CONTATO ================= -->
-
-    <div class="panel" id="panel-contato">
-
-      <div class="card">
-
-        <h2>
-          Dados de contato
-        </h2>
-
-        <label>
-          E-mail
-        </label>
-
-        <input
-          type="email"
-          id="contatoEmail"
-          placeholder="contato@aliancask.com"
-        >
-
-        <label>
-          Instagram
-        </label>
-
-        <input
-          type="text"
-          id="contatoInstagram"
-          placeholder="https://instagram.com/..."
-        >
-
-        <label>
-          Facebook
-        </label>
-
-        <input
-          type="text"
-          id="contatoFacebook"
-          placeholder="https://facebook.com/..."
-        >
-
-        <label>
-          Discord
-        </label>
-
-        <input
-          type="text"
-          id="contatoDiscord"
-          placeholder="https://discord.gg/..."
-        >
-
-        <button onclick="mostrarSalvo('statusContato')">
-          Salvar
-        </button>
-
-        <div
-          class="status"
-          id="statusContato"
-        ></div>
-
-      </div>
-
-    </div>
-
-
-  </div>
-
-</div>
+</section>
 
 
 <script>
 
-/* =========================================================
-   LOGIN DE TESTE
-   ========================================================= */
+/*
+====================================================
+LOGIN ADM
+====================================================
 
-const ADMIN_EMAIL = "admin@teste.com";
-const ADMIN_PASSWORD = "Admin123!";
+IMPORTANTE:
+Este login é apenas para esconder/proteger
+a interface no navegador.
 
+Para segurança real, depois precisamos de
+autenticação no servidor.
+*/
 
-const loginScreen =
-  document.getElementById("loginScreen");
-
-const dashboard =
-  document.getElementById("dashboard");
-
-const loginError =
-  document.getElementById("loginError");
-
-
-document
-  .getElementById("loginBtn")
-  .addEventListener("click", login);
+const ADMIN_EMAIL = "admin@bygdeall.com";
+const ADMIN_SENHA = "Bygdeall@2026";
 
 
-document
-  .getElementById("loginPass")
-  .addEventListener("keydown", function(event){
-
-    if(event.key === "Enter"){
-      login();
-    }
-
-  });
-
-
-function login(){
+function entrar(){
 
   const email =
-    document
-      .getElementById("loginEmail")
-      .value
-      .trim();
+    document.getElementById("email").value.trim();
 
-  const password =
-    document
-      .getElementById("loginPass")
-      .value;
+  const senha =
+    document.getElementById("senha").value;
+
+  const erro =
+    document.getElementById("erro");
 
 
   if(
     email === ADMIN_EMAIL &&
-    password === ADMIN_PASSWORD
+    senha === ADMIN_SENHA
   ){
 
     sessionStorage.setItem(
@@ -829,11 +379,11 @@ function login(){
       "true"
     );
 
-    mostrarDashboard();
+    mostrarPainel();
 
   }else{
 
-    loginError.textContent =
+    erro.textContent =
       "E-mail ou senha inválidos.";
 
   }
@@ -841,376 +391,153 @@ function login(){
 }
 
 
-/* =========================================================
-   SESSÃO
-   ========================================================= */
+function mostrarPainel(){
 
-function mostrarDashboard(){
+  document.getElementById("login")
+    .style.display = "none";
 
-  loginScreen.style.display = "none";
-
-  dashboard.style.display = "block";
+  document.getElementById("painel")
+    .style.display = "block";
 
 }
 
 
-function mostrarLogin(){
+function sair(){
 
-  dashboard.style.display = "none";
+  sessionStorage.removeItem(
+    "adminLogado"
+  );
 
-  loginScreen.style.display = "flex";
+  location.reload();
 
 }
 
+
+/* VERIFICAR LOGIN */
 
 if(
-  sessionStorage.getItem("adminLogado") === "true"
+  sessionStorage.getItem("adminLogado")
+  === "true"
 ){
 
-  mostrarDashboard();
+  mostrarPainel();
 
 }
 
+
+/* =========================================
+   VÍDEO DA GALERIA
+========================================= */
 
 document
-  .getElementById("logoutBtn")
-  .addEventListener("click", function(){
+  .getElementById("videoInput")
+  .addEventListener("change", function(event){
 
-    sessionStorage.removeItem(
-      "adminLogado"
-    );
+    const arquivo =
+      event.target.files[0];
 
-    mostrarLogin();
+    if(!arquivo){
+      return;
+    }
 
-  });
 
+    if(!arquivo.type.startsWith("video/")){
 
-/* =========================================================
-   ABAS
-   ========================================================= */
+      document.getElementById(
+        "videoStatus"
+      ).textContent =
+        "Escolha um arquivo de vídeo.";
 
-document
-  .querySelectorAll(".tab-btn")
-  .forEach(function(button){
-
-    button.addEventListener(
-      "click",
-      function(){
-
-        document
-          .querySelectorAll(".tab-btn")
-          .forEach(function(btn){
-
-            btn.classList.remove("active");
-
-          });
-
-
-        document
-          .querySelectorAll(".panel")
-          .forEach(function(panel){
-
-            panel.classList.remove("active");
-
-          });
-
-
-        button.classList.add("active");
-
-
-        document
-          .getElementById(
-            "panel-" + button.dataset.tab
-          )
-          .classList.add("active");
-
-      }
-
-    );
-
-  });
-
-
-/* =========================================================
-   MENSAGEM DE TESTE
-   ========================================================= */
-
-function mostrarSalvo(id){
-
-  const elemento =
-    document.getElementById(id);
-
-  elemento.textContent =
-    "Salvo com sucesso!";
-
-  setTimeout(function(){
-
-    elemento.textContent = "";
-
-  },3000);
-
-}
-
-
-/* =========================================================
-   ITENS
-   ========================================================= */
-
-let itens = [];
-
-
-function adicionarItem(){
-
-  const tipo =
-    document.getElementById("itemTipo").value;
-
-  const nome =
-    document.getElementById("itemNome").value.trim();
-
-  const dono =
-    document.getElementById("itemDono").value.trim();
-
-  const membros =
-    document.getElementById("itemMembros").value;
-
-  const link =
-    document.getElementById("itemLink").value.trim();
-
-
-  if(!nome){
-
-    alert("Digite o nome do grupo/canal.");
-
-    return;
-
-  }
-
-
-  itens.push({
-
-    tipo,
-    nome,
-    dono,
-    membros,
-    link
-
-  });
-
-
-  atualizarItens();
-
-
-  document.getElementById("itemNome").value = "";
-
-  document.getElementById("itemDono").value = "";
-
-  document.getElementById("itemMembros").value = "";
-
-  document.getElementById("itemLink").value = "";
-
-
-  mostrarSalvo("statusItem");
-
-}
-
-
-function atualizarItens(){
-
-  const lista =
-    document.getElementById("itemsList");
-
-
-  if(itens.length === 0){
-
-    lista.innerHTML =
-      '<p style="color:var(--muted);font-size:13px;">Nenhum item cadastrado.</p>';
-
-    return;
-
-  }
-
-
-  lista.innerHTML = itens.map(
-    function(item,index){
-
-      return `
-
-        <div class="list-item">
-
-          <div class="info">
-
-            <div class="n">
-              ${escapar(item.nome)}
-              <span style="color:var(--muted);font-size:11px;">
-                (${escapar(item.tipo)})
-              </span>
-            </div>
-
-            <div class="s">
-              ${escapar(item.membros || 0)} membros
-              ${item.dono ? " • Dono: " + escapar(item.dono) : ""}
-            </div>
-
-          </div>
-
-          <button
-            class="btn-icon"
-            onclick="removerItem(${index})"
-          >
-            🗑
-          </button>
-
-        </div>
-
-      `;
+      return;
 
     }
-  ).join("");
-
-}
 
 
-function removerItem(index){
-
-  itens.splice(index,1);
-
-  atualizarItens();
-
-}
+    const video =
+      document.getElementById(
+        "videoPreview"
+      );
 
 
-/* =========================================================
-   AVISOS
-   ========================================================= */
+    /*
+    Cria uma prévia local do vídeo.
+    */
 
-let avisos = [];
+    video.src =
+      URL.createObjectURL(arquivo);
+
+    video.style.display = "block";
 
 
-function adicionarAviso(){
+    document.getElementById(
+      "videoStatus"
+    ).textContent =
+      "✅ Vídeo selecionado.";
 
-  const tipo =
-    document.getElementById("avisoTipo").value;
+
+    /*
+    Tenta iniciar a reprodução.
+    */
+
+    video.play().catch(() => {});
+
+  });
+
+
+/* =========================================
+   INFORMAÇÕES
+========================================= */
+
+function salvarInfo(){
 
   const titulo =
-    document
-      .getElementById("avisoTitulo")
-      .value
-      .trim();
+    document.getElementById(
+      "titulo"
+    ).value;
 
-  const texto =
-    document
-      .getElementById("avisoTexto")
-      .value
-      .trim();
+  const frase =
+    document.getElementById(
+      "frase"
+    ).value;
 
 
-  if(!titulo || !texto){
+  localStorage.setItem(
+    "siteTitulo",
+    titulo
+  );
 
-    alert("Preencha título e texto.");
-
-    return;
-
-  }
-
-
-  avisos.unshift({
-
-    tipo,
-    titulo,
-    texto
-
-  });
+  localStorage.setItem(
+    "siteFrase",
+    frase
+  );
 
 
-  atualizarAvisos();
-
-
-  document.getElementById("avisoTitulo").value = "";
-
-  document.getElementById("avisoTexto").value = "";
-
-
-  mostrarSalvo("statusAviso");
+  document.getElementById(
+    "infoStatus"
+  ).textContent =
+    "✅ Informações salvas neste navegador.";
 
 }
 
 
-function atualizarAvisos(){
+/* CARREGAR INFORMAÇÕES */
 
-  const lista =
-    document.getElementById("avisosList");
-
-
-  if(avisos.length === 0){
-
-    lista.innerHTML =
-      '<p style="color:var(--muted);font-size:13px;">Nenhum aviso publicado.</p>';
-
-    return;
-
-  }
+document.getElementById(
+  "titulo"
+).value =
+  localStorage.getItem(
+    "siteTitulo"
+  ) || "";
 
 
-  lista.innerHTML = avisos.map(
-    function(aviso,index){
-
-      return `
-
-        <div class="notice">
-
-          <strong>
-            ${escapar(aviso.titulo)}
-          </strong>
-
-          <small>
-            ${escapar(aviso.texto)}
-          </small>
-
-          <br><br>
-
-          <button
-            class="secondary"
-            style="width:auto;padding:7px 12px;font-size:12px;"
-            onclick="removerAviso(${index})"
-          >
-            Excluir
-          </button>
-
-        </div>
-
-      `;
-
-    }
-  ).join("");
-
-}
-
-
-function removerAviso(index){
-
-  avisos.splice(index,1);
-
-  atualizarAvisos();
-
-}
-
-
-/* =========================================================
-   SEGURANÇA BÁSICA CONTRA HTML INJETADO
-   ========================================================= */
-
-function escapar(valor){
-
-  return String(valor)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-
-}
+document.getElementById(
+  "frase"
+).value =
+  localStorage.getItem(
+    "siteFrase"
+  ) || "";
 
 </script>
 
 </body>
-            </html>
+  </html>
